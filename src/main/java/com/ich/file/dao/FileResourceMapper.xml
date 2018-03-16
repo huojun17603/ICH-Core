@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ich.file.dao.FileResourceMapper" >
+
+    <insert id="insert" parameterType="com.ich.file.pojo.FileResource">
+        INSERT INTO ich_res_file(id,oldname,randomname,path,suffix,createtime,size,uploadip,hash,source,sourceid)
+        VALUES(#{id},#{id},#{oldname},#{randomname},#{path},#{suffix},#{createtime},#{size},#{uploadip},#{hash},#{source},#{sourceid})
+    </insert>
+
+    <update id="update" parameterType="com.ich.file.pojo.FileResource">
+        UPDATE ich_res_file
+        SET oldname=#{oldname},randomname=#{randomname},path=#{path},suffix=#{suffix},size=#{size},uploadip=#{uploadip},hash=#{hash}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM ich_res_file WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteBySource">
+        DELETE FROM ich_res_file WHERE source = #{source} AND sourceid = #{sourceid}
+    </delete>
+
+    <select id="selectById"  resultType="com.ich.file.pojo.FileResource">
+        SELECT * FROM ich_res_file WHERE id = #{id}
+    </select>
+
+    <select id="selectBySource"  resultType="com.ich.file.pojo.FileResource">
+        SELECT * FROM ich_res_file WHERE source = #{source} AND sourceid = #{sourceid}
+    </select>
+
+</mapper>

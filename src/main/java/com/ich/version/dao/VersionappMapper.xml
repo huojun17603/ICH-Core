@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ich.version.dao.VersionappMapper" >
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ich.version.pojo.Versionapp">
+        INSERT INTO ich_core_version(equipment,appname,version,`force`,filezise,http,remark,releasetime,status)
+        VALUES(#{equipment},#{appname},#{version},#{force},#{filezise},#{http},#{remark},null,1)
+    </insert>
+
+    <update id="update" parameterType="com.ich.version.pojo.Versionapp">
+        UPDATE ich_core_version SET equipment=#{equipment},appname=#{appname},version=#{version},`force`=#{force},filezise=#{filezise},http=#{http},remark=#{remark}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateToNewest"  parameterType="Long">
+        UPDATE ich_core_version SET releasetime = NOW(),status = 2 WHERE id = #{id}
+    </update>
+
+    <update id="updateAllToHistory" >
+        UPDATE ich_core_version SET status = 3 WHERE status = 2 AND equipment = #{equipment} AND appname = #{appname}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM ich_core_version WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" parameterType="Long" resultType="com.ich.version.pojo.Versionapp">
+        SELECT * FROM ich_core_version WHERE id = #{id}
+    </select>
+
+    <select id="selectByVersion" resultType="com.ich.version.pojo.Versionapp">
+        SELECT * FROM ich_core_version WHERE equipment = #{equipment} AND appname = #{appname} AND version = #{version}
+    </select>
+
+    <select id="selectByNewest" resultType="com.ich.version.pojo.Versionapp">
+        SELECT * FROM ich_core_version WHERE equipment = #{equipment} AND appname = #{appname} AND status = 2
+    </select>
+
+    <select id="selectByHistory" resultType="com.ich.version.pojo.Versionapp">
+        SELECT * FROM ich_core_version WHERE equipment = #{equipment} AND appname = #{appname}
+    </select>
+
+    <select id="selectByExample" resultType="com.ich.version.pojo.Versionapp">
+        SELECT * FROM ich_core_version
+        WHERE 1 = 1
+        <if test="equipment != null and equipment != ''"> AND equipment = #{equipment}</if>
+        <if test="appname != null and appname != ''"> AND appname like '%${appname}%'</if>
+        Order by appname asc,equipment asc ,version desc
+    </select>
+
+</mapper>

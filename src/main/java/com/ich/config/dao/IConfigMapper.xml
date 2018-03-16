@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ich.config.dao.IConfigMapper" >
+    <insert id="insert" parameterType="com.ich.config.pojo.IConfig">
+        INSERT INTO ich_core_config(ikey,ivalue,driver,groupname,docs)
+        VALUES(#{ikey},#{ivalue},#{driver},#{groupname},#{docs})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.ich.config.pojo.IConfig">
+        UPDATE ich_core_config SET ivalue=#{ivalue},driver=#{driver},groupname=#{groupname},docs=#{docs}
+        WHERE ikey = #{ikey}
+    </update>
+
+    <delete id="deleteExcess" parameterType="String">
+        DELETE FROM ich_core_config WHERE ikey NOT IN (${keys});
+    </delete>
+
+    <select id="selectByPrimaryKey" parameterType="String" resultType="com.ich.config.pojo.IConfig">
+        SELECT * FROM ich_core_config WHERE ikey = #{key}
+    </select>
+
+    <select id="selectAllList"  resultType="com.ich.config.pojo.IConfig">
+        SELECT * FROM ich_core_config WHERE groupname IS NOT NULL ORDER BY groupname,ikey ASC
+    </select>
+</mapper>

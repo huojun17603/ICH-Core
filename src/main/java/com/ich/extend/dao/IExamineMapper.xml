@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ich.extend.dao.IExamineMapper" >
+
+    <insert id="insert" parameterType="com.ich.extend.pojo.IExamine">
+        INSERT INTO ich_ext_examine(id,handleresult,handletime,handlername,handlermark,sourcegroup,source,sourceid)
+        VALUES(#{id},#{handleresult},#{handletime},#{handlername},#{handlermark},#{sourcegroup},#{source},#{sourceid})
+    </insert>
+
+    <select id="selectMaxGroup" resultType="com.ich.extend.pojo.IExamine">
+        SELECT max(sourcegroup) FROM ich_ext_examine
+        WHERE source=#{source} AND sourceid=#{sourceid}
+        GROUP BY source,sourceid
+    </select>
+
+    <select id="selectListOfGroup" resultType="com.ich.extend.pojo.IExamine">
+        SELECT * FROM ich_ext_examine
+        WHERE source=#{source} AND sourceid=#{sourceid} AND sourcegroup=#{sourcegroup}
+        ORDER BY handletime DESC
+    </select>
+
+</mapper>

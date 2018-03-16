@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ich.module.dao.WindowResourceMapper">
+
+	<sql id="BASE_SELECT_SQL">
+		SW_Code as code,
+		SW_Name as name,
+		SW_Url as url,
+		SW_Include as include,
+		SW_SM as modular
+	</sql>
+	
+    <delete id="clearWindowResource">
+		delete from ich_sys_windowresource
+	</delete>
+
+    <insert id="insertWindowResource" parameterType="com.ich.module.pojo.WindowResource">
+		insert into ich_sys_windowresource (SW_Code,SW_Name,SW_URL,SW_Include,SW_SM)
+		values (#{code},#{name},#{url},#{include},#{modular})
+	</insert>
+
+	<update id="updateWindowResource" parameterType="com.ich.module.pojo.WindowResource">
+		update ich_sys_windowresource set
+			SW_Name = #{name},
+			SW_URL = #{url},
+			SW_Include = #{include},
+			SW_SM = #{modular}
+		where SW_Code = #{code}
+	</update>
+	
+	<select id="selectAllResource"  resultType="com.ich.module.pojo.WindowResource">
+		SELECT
+			<include refid="BASE_SELECT_SQL" />
+		FROM ich_sys_windowresource
+		ORDER BY SW_Name
+	</select>
+	
+	<select id="selectResourceByCode" resultType="com.ich.module.pojo.WindowResource">
+		SELECT
+			<include refid="BASE_SELECT_SQL" />
+		FROM ich_sys_windowresource
+		WHERE SW_Code = #{windowCode}
+	</select>
+	
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ich.module.dao.MenuResourceMapper">
+
+	<sql id="BASE_SELECT_SQL">
+		SR_Code as code,
+		SR_Name as name,
+		SR_URL as url,
+		SR_Parent as parent,
+		SR_Type as type,
+		SR_Level as level,
+		SR_Icon as icon,
+		SR_View as 'view',
+		SR_Doc as doc,
+		SR_Sequence as sequence,
+		SR_SM as modular
+	</sql>
+
+    <select id="selectResourceByCode" parameterType="String" resultType="com.ich.module.pojo.MenuResource">
+        select <include refid="BASE_SELECT_SQL" /> from ich_sys_menuresource where SR_Code = #{code}
+    </select>
+    
+    <select id="selectCResourceByCode" parameterType="String" resultType="com.ich.module.pojo.MenuResource">
+        select <include refid="BASE_SELECT_SQL" /> from ich_sys_menuresource where SR_Parent = #{code}
+    </select>
+    
+    <delete id="clearMenuResource">
+		delete from ich_sys_menuresource
+	</delete>
+
+    <insert id="insertMenuResource" parameterType="com.ich.module.pojo.MenuResource">
+		insert into ich_sys_menuresource (SR_Code,SR_Name,SR_URL,SR_Parent,SR_Type,SR_Level,SR_Icon,SR_Doc,SR_View,SR_Sequence,SR_SM)
+		values (#{code},#{name},#{url},#{parent},#{type},#{level},#{icon},#{doc},#{view},#{sequence},#{modular})
+	</insert>
+
+	<update id="updateMenuResource" parameterType="com.ich.module.pojo.MenuResource">
+		update ich_sys_menuresource set
+			SR_Name = #{name},
+			SR_URL = #{url},
+			SR_Parent = #{parent},
+			SR_Type = #{type},
+			SR_Level = #{level},
+			SR_Icon = #{icon},
+			SR_Doc = #{doc},
+			SR_View = #{view},
+			SR_Sequence = #{sequence},
+			SR_SM = #{modular}
+		where SR_Code = #{code}
+	</update>
+	
+	<select id="selectAllResource"  resultType="com.ich.module.pojo.MenuResource">
+		SELECT
+			<include refid="BASE_SELECT_SQL" />
+		FROM ich_sys_menuresource
+		ORDER BY SR_Sequence
+	</select>
+	
+</mapper>

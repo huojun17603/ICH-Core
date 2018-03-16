@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ich.extend.dao.ICategoryMapper" >
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ich.extend.pojo.ICategory">
+        INSERT INTO ich_ext_category(pid,source,status,onum,name,remark,attr,http)
+        VALUES(#{pid},#{source},#{status},#{onum},#{name},#{remark},#{attr},#{http})
+    </insert>
+
+    <update id="update" parameterType="com.ich.extend.pojo.ICategory">
+        UPDATE ich_ext_category
+        SET pid=#{pid},source=#{source},status=#{status},onum=#{onum},name=#{name},remark=#{remark},attr=#{attr},http=#{http}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE ich_ext_category
+        SET status=#{status}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM ich_ext_category WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" resultType="com.ich.extend.pojo.ICategory">
+        SELECT * FROM ich_ext_category WHERE id = #{id}
+    </select>
+
+    <select id="selectListOfSource"  resultType="com.ich.extend.pojo.ICategory">
+        SELECT * FROM ich_ext_category
+        WHERE source=#{source}
+        <if test="status!=null"> AND status=#{status}</if>
+        ORDER BY onum ASC
+    </select>
+
+    <select id="selectListOfPid"  resultType="com.ich.extend.pojo.ICategory">
+        SELECT * FROM ich_ext_category
+        WHERE 1=1
+        <if test="pid!=null"> AND pid=#{pid}</if>
+        <if test="pid==null"> AND pid is null</if>
+        <if test="status!=null"> AND status=#{status}</if>
+        <if test="source!=null"> AND source=#{source}</if>
+        ORDER BY onum ASC
+    </select>
+
+</mapper>

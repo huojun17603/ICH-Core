@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ich.file.dao.ImageResourceMapper" >
+
+    <insert id="insert" parameterType="com.ich.file.pojo.ImageResource">
+        INSERT INTO ich_res_img(id,randomname,path,http,createtime,onum,height,width,source,sourceid)
+        VALUES(#{id},#{randomname},#{path},#{http},#{createtime},#{onum},#{height},#{width},#{source},#{sourceid})
+    </insert>
+
+    <update id="update" parameterType="com.ich.file.pojo.ImageResource">
+        UPDATE ich_res_img
+        SET randomname=#{randomname},path=#{path},http=#{http},height=#{height},width=#{width}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateOnum" parameterType="com.ich.file.pojo.ImageResource">
+        UPDATE ich_res_img
+        SET onum=#{onum}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM ich_res_img WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteBySource">
+        DELETE FROM ich_res_img WHERE source = #{source} AND sourceid = #{sourceid}
+    </delete>
+
+    <select id="selectById"  resultType="com.ich.file.pojo.ImageResource">
+        SELECT * FROM ich_res_img WHERE id = #{id}
+    </select>
+
+    <select id="selectMaxNumOfSource"  resultType="Integer">
+        SELECT MAX(onum) FROM ich_res_img WHERE source = #{source} AND sourceid = #{sourceid} GROUP BY sourceid
+    </select>
+
+    <select id="selectByName"  resultType="com.ich.file.pojo.ImageResource">
+        SELECT * FROM ich_res_img WHERE randomname = #{randomname}
+    </select>
+
+    <select id="selectBySource"  resultType="com.ich.file.pojo.ImageResource">
+        SELECT * FROM ich_res_img WHERE source = #{source} AND sourceid = #{sourceid}
+    </select>
+
+</mapper>

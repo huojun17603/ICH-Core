@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ich.module.dao.ModularMapper">
+	<delete id="cleanModular">
+		delete from ich_sys_modular
+	</delete>
+
+    <insert id="addModular" parameterType="com.ich.module.pojo.Modular">
+		insert into ich_sys_modular (SM_Code,SM_Name,SM_Version,SM_CreateTime)
+		values (#{modCode},#{modName},#{modVersion},#{regTime})
+	</insert>
+	
+	<select id="selectAllModular" resultType="com.ich.module.pojo.Modular">
+		select
+			SM_Code as modCode,
+			SM_Name as modName,
+			SM_Version as modVersion,
+			SM_CreateTime as regTime
+		from ich_sys_modular
+	</select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ich.extend.dao.IWitnessesMapper" >
+
+    <insert id="insert" parameterType="com.ich.extend.pojo.IWitnesses">
+        INSERT INTO ich_ext_witnesses(id,aid,aname,wid,wname,reason,createtime,handletime,status)
+        VALUES(#{id},#{aid},#{aname},#{wid},#{wname},#{reason},#{createtime},#{handletime},#{status})
+    </insert>
+
+    <update id="updateWitnessesOfHandle" >
+        UPDATE ich_ext_witnesses
+        SET status = 1, handletime = now()
+        WHERE wid = #{wid} AND status = 0
+    </update>
+
+    <select id="selectByRepeat"  resultType="com.ich.extend.pojo.IWitnesses">
+        SELECT * FROM ich_ext_witnesses
+        WHERE wid = #{wid} AND aid = #{aid} AND status = 0
+    </select>
+
+    <select id="selectWitnessesGourpByWid"  resultType="com.ich.extend.pojo.IWitnesses">
+        SELECT wid,wname,createtime,count(reason) as reason FROM ich_ext_witnesses
+        WHERE status = #{status}
+        GROUP BY wid
+        ORDER BY createtime DESC
+    </select>
+    <select id="selectWitnessesWidList"  resultType="com.ich.extend.pojo.IWitnesses">
+        SELECT * FROM ich_ext_witnesses
+        WHERE wid = #{wid} AND status = 0
+        ORDER BY createtime DESC
+    </select>
+
+</mapper>
