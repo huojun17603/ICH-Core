@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ich.monitor.dao.IDataMonitorMapper">
+
+	<select id="selectAll" resultType="com.ich.monitor.pojo.IDataMonitor">
+		select * from ich_core_monitor
+	</select>
+
+	<select id="selectById" resultType="com.ich.monitor.pojo.IDataMonitor">
+		select * from ich_core_monitor  where code = #{code}
+	</select>
+
+	<update id="updateIsnotice">
+		update ich_core_monitor set isnotice = #{isnotice} where code = #{code}
+	</update>
+
+	<update id="updateLatestTime">
+		update ich_core_monitor set latesttime = now() where code = #{code}
+	</update>
+	
+</mapper>
