@@ -46,12 +46,12 @@ public class IDataMonitorServiceImpl implements IDataMonitorService {
                     }
                 }
             }
-            try {
-                editLatestTime("iDataMonitorServiceImpl_execute");
-            } catch (Exception e) {
-                // 用try catch块包住,避免监控异常打断任务执行事务
-                e.printStackTrace();
-            }
+        }
+        try {
+            editLatestTime("iDataMonitorServiceImpl_execute");
+        } catch (Exception e) {
+            // 用try catch块包住,避免监控异常打断任务执行事务
+            e.printStackTrace();
         }
     }
 
