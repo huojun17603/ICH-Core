@@ -13,6 +13,8 @@ public interface IFeedbackMapper {
 
     public int delete(@Param("id")String id);
 
+    public IFeedback selectById(@Param("id")String id);
+
     public List<IFeedback> selectOfList(String searchkey);
 
 }

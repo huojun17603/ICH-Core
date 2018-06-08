@@ -17,6 +17,10 @@
         DELETE FROM ich_ext_feedback WHERE id = #{id}
     </delete>
 
+    <select id="selectById" resultType="com.ich.extend.pojo.IFeedback">
+        SELECT * FROM ich_ext_feedback WHERE id = #{id}
+    </select>
+
     <select id="selectOfList" parameterType="String" resultType="com.ich.extend.pojo.IFeedback">
         SELECT * FROM ich_ext_feedback
         <if test="searchkey!=null and searchkey!=''">  WHERE username like '%${username}$' OR contact like '%${contact}$' OR context like '%${context}$' </if>

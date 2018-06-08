@@ -200,15 +200,6 @@ public class IMappingJackson2HttpMessageConverter extends AbstractHttpMessageCon
 		return readJavaType(javaType, inputMessage);
 	}
 
-	@Override
-	public boolean canWrite(Type type, Class<?> aClass, MediaType mediaType) {
-		return false;
-	}
-
-	@Override
-	public void write(Object o, Type type, MediaType mediaType, HttpOutputMessage httpOutputMessage) throws IOException, HttpMessageNotWritableException {
-
-	}
 
 	private Object readJavaType(JavaType javaType, HttpInputMessage inputMessage) {
 		try {

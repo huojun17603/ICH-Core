@@ -13,6 +13,15 @@ public interface IDataMonitorMapper {
 
     void updateIsnotice(@Param("code")String code, @Param("isnotice") Integer isnotice);
 
-    int updateLatestTime(@Param("code")String code);
+    int updateLatestTime(String servername,String servercode);
 
+    IDataMonitor selectByPrimarykeys();
+
+    IDataMonitor selectOfPublisher(String servercode);
+
+    void insertInit(IDataMonitor monitor);
+
+    void updateInit(IDataMonitor monitor);
+
+    void updateServerstatus(IDataMonitor iDataMonitor, int i);
 }

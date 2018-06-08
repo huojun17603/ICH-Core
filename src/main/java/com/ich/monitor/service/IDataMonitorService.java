@@ -2,16 +2,50 @@ package com.ich.monitor.service;
 
 import com.ich.core.http.entity.HttpResponse;
 import com.ich.monitor.pojo.IDataMonitor;
+import com.ich.monitor.pojo.IDataTask;
+
+import java.util.List;
 
 public interface IDataMonitorService {
 
     /**
-     * 任务执行
+     * 执行监控任务
      */
     public void execute();
 
-    public HttpResponse editLatestTime(String code);
+    /**
+     * 更新任务执行时间
+     * @param servername
+     * @param servercode
+     * @return
+     */
+    public HttpResponse editLatestTime(String servername,String servercode);
 
-    public IDataMonitor findByCode(String code);
+    /**
+     * 初始化classpath:task/task.xml文件中的任务列表
+     * @param monitor
+     */
+    public void init(IDataMonitor monitor);
 
+    /**
+     * 发布任务
+     * @param servercode 服务编码
+     * @param handleids 任务ID集
+     */
+    public void publisherTasks(String servercode,List<String> handleids);
+    /**
+     * 领取任务
+     * @param servercode 服务编码
+     */
+    public List<IDataTask> obtainTasks(String servercode);
+    /**
+     * 任务完成
+     * @param taskid 任务ID
+     */
+    public void successTask(String taskid);
+    /**
+     * 任务失败
+     * @param taskid 任务ID
+     */
+    public void failureTask(String taskid);
 }
