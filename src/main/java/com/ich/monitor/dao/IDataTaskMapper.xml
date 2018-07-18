@@ -4,6 +4,33 @@
 
 <mapper namespace="com.ich.monitor.dao.IDataTaskMapper">
 
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ich.monitor.pojo.IDataTask">
+        INSERT INTO ich_monitor_task(servername,servercode,serverip,handleid,handlestatus)
+        VALUES(#{servername},#{servercode},#{serverip},#{handleid},#{handlestatus})
+    </insert>
 
-	
+    <update id="update" parameterType="com.ich.monitor.pojo.IDataTask">
+        UPDATE ich_monitor_task
+        SET servername = #{servername},servercode = #{servercode},serverip = #{serverip}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE ich_monitor_task
+        SET handlestatus = #{handlestatus},handletime = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectNINGByNameAndCode" resultType="com.ich.monitor.pojo.IDataTask">
+        SELECT * FROM ich_monitor_task WHERE handlestatus = 0 AND servername = #{servername} AND servercode = #{servercode}
+    </select>
+
+    <select id="selectINGByCode" resultType="com.ich.monitor.pojo.IDataTask">
+        SELECT * FROM ich_monitor_task WHERE handlestatus in (0,1) AND servercode = #{servercode}
+    </select>
+
+    <select id="selectByCodeAndHandleid" resultType="com.ich.monitor.pojo.IDataTask">
+        SELECT * FROM ich_monitor_task WHERE handleid = #{handleid} AND servercode = #{servercode}
+    </select>
+
 </mapper>

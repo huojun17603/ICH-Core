@@ -25,8 +25,6 @@ public class IDataMonitorProcessor implements ApplicationListener<ContextRefresh
     /** .xml后缀 */
     private final static String suffix = ".xml";
 
-    public static String ServiceName = "";
-
     @Autowired
     IDataMonitorService iDataMonitorService;
 
@@ -46,16 +44,18 @@ public class IDataMonitorProcessor implements ApplicationListener<ContextRefresh
                     Document document = reader.read(is);
 					/* 读取并写入配置信息 */
                     Element serverElement = document.getRootElement();
-
-                    String servername = serverElement.attributeValue("servername");
-                    ServiceName = servername;
                     List<?> taskElements = serverElement.elements("task");
                     for (Object o : taskElements) {
-                        Element configElement = (Element) o;
+                        Element element = (Element) o;
                         IDataMonitor monitor = new IDataMonitor();
-                        String code = configElement.attributeValue("code"); // 取得模块名称
-
-
+                        String servercode = element.attributeValue("servercode"); // 取得模块名称
+                        Long warnstamp = Long.valueOf(element.attributeValue("warnstamp")); // 取得模块名称
+                        Boolean cover = Boolean.valueOf(element.attributeValue("cover")); // 取得模块名称
+                        Boolean repeatid = Boolean.valueOf(element.attributeValue("repeatid")); // 取得模块名称
+                        monitor.setServercode(servercode);
+                        monitor.setWarnstamp(warnstamp);
+                        monitor.setCover(cover);
+                        monitor.setRepeatid(repeatid);
                         iDataMonitorService.init(monitor);
                     }
                 }

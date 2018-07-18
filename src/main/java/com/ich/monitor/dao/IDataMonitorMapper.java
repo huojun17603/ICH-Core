@@ -7,21 +7,19 @@ import java.util.List;
 
 public interface IDataMonitorMapper {
 
-    List<IDataMonitor> selectAll();
-
-    IDataMonitor selectById(@Param("code")String code);
-
-    void updateIsnotice(@Param("code")String code, @Param("isnotice") Integer isnotice);
-
-    int updateLatestTime(String servername,String servercode);
-
-    IDataMonitor selectByPrimarykeys();
-
-    IDataMonitor selectOfPublisher(String servercode);
-
     void insertInit(IDataMonitor monitor);
 
     void updateInit(IDataMonitor monitor);
 
-    void updateServerstatus(IDataMonitor iDataMonitor, int i);
+    int updateLatestTime(@Param("servername")String servername, @Param("servercode")String servercode);
+
+    void updateServerstatus(IDataMonitor iDataMonitor);
+
+    IDataMonitor selectByPrimarykeys(@Param("servername")String servername, @Param("servercode")String servercode);
+
+    List<IDataMonitor> selectAll();
+
+    List<IDataMonitor> selectEffectiveByServercode(@Param("servercode")String servercode);
+
+    List<IDataMonitor> selectDisEffectiveByServercode(@Param("servercode")String servercode);
 }

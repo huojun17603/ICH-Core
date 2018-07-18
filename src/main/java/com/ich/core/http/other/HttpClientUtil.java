@@ -53,7 +53,6 @@ public class HttpClientUtil {
 			if (response.getStatusLine().getStatusCode() == 200) {
 				resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
 			}
-			System.out.println(response.getStatusLine().getStatusCode());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

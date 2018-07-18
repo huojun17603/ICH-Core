@@ -15,11 +15,10 @@ public interface IDataMonitorService {
 
     /**
      * 更新任务执行时间
-     * @param servername
      * @param servercode
      * @return
      */
-    public HttpResponse editLatestTime(String servername,String servercode);
+    public HttpResponse editLatestTime(String servercode);
 
     /**
      * 初始化classpath:task/task.xml文件中的任务列表
@@ -39,13 +38,18 @@ public interface IDataMonitorService {
      */
     public List<IDataTask> obtainTasks(String servercode);
     /**
+     * 正在执行
+     * @param taskid
+     */
+    public void startTask(Long taskid);
+    /**
      * 任务完成
      * @param taskid 任务ID
      */
-    public void successTask(String taskid);
+    public void successTask(Long taskid);
     /**
      * 任务失败
      * @param taskid 任务ID
      */
-    public void failureTask(String taskid);
+    public void failureTask(Long taskid);
 }

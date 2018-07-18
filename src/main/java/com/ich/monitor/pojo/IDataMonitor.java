@@ -21,18 +21,16 @@ public class IDataMonitor {
     //是否使用任务池，应该是外部代码决定的
 
     //是否作为任务发布者，注册的时候保证其唯一性，就可以保证任务不重复
-    private Boolean publisher;
+    private Boolean publisher;//无用
     //是否重复发布任务，
     //如果是则在存在未完成任务的情况下依然发布（可用于任务本身执行不会重复的情况，例如：新增/删除记录），这种方案一定要保证任务可以被处理完！
     //如果否则任务没有处理完则不会发布任务，保证任务量不会无限累计（可用于任务本身执行会重复的情况，例如：定时更新记录）
-    private Boolean repeat;
-
-
+    private Boolean cover;
+    //是否允许重复的业务ID
+    //有些业务只需要处理一次，以保证正确性（例如：新增/删除记录）
+    private Boolean repeatid;
     //最新处理时间
     private Date latesttime;
-
-
-
     //警告时间戳，当最新处理时间与当前时间的差值大于此值，发出警告（单位毫秒）
     private Long warnstamp;
     //服务状态，1：进行中；2：异常
@@ -81,6 +79,14 @@ public class IDataMonitor {
         this.publisher = publisher;
     }
 
+    public Boolean getRepeatid() {
+        return repeatid;
+    }
+
+    public void setRepeatid(Boolean repeatid) {
+        this.repeatid = repeatid;
+    }
+
     public Date getLatesttime() {
         return latesttime;
     }
@@ -105,12 +111,12 @@ public class IDataMonitor {
         this.serverstatus = serverstatus;
     }
 
-    public Boolean getRepeat() {
-        return repeat;
+    public Boolean getCover() {
+        return cover;
     }
 
-    public void setRepeat(Boolean repeat) {
-        this.repeat = repeat;
+    public void setCover(Boolean cover) {
+        this.cover = cover;
     }
 
     public Boolean getInform() {

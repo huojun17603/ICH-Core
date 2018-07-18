@@ -4,20 +4,45 @@
 
 <mapper namespace="com.ich.monitor.dao.IDataMonitorMapper">
 
-	<select id="selectAll" resultType="com.ich.monitor.pojo.IDataMonitor">
-		select * from ich_core_monitor
-	</select>
+	<insert id="insertInit" parameterType="com.ich.monitor.pojo.IDataMonitor">
+		INSERT INTO ich_monitor_server(servername,servercode,serverip,serverremark,cover,repeatid,latesttime,warnstamp,serverstatus)
+		VALUES(#{servername},#{servercode},#{serverip},#{serverremark},#{cover},#{repeatid},#{latesttime},#{warnstamp},#{serverstatus})
+	</insert>
 
-	<select id="selectById" resultType="com.ich.monitor.pojo.IDataMonitor">
-		select * from ich_core_monitor  where code = #{code}
-	</select>
-
-	<update id="updateIsnotice">
-		update ich_core_monitor set isnotice = #{isnotice} where code = #{code}
+	<update id="updateInit" parameterType="com.ich.monitor.pojo.IDataMonitor">
+		UPDATE ich_monitor_server
+		SET serverip = #{serverip},serverremark = #{serverremark},cover = #{cover},repeatid = #{repeatid},latesttime = #{latesttime},warnstamp = #{warnstamp},serverstatus = #{serverstatus}
+		WHERE servername = #{servername} AND servercode = #{servercode}
 	</update>
 
 	<update id="updateLatestTime">
-		update ich_core_monitor set latesttime = now() where code = #{code}
+		UPDATE ich_monitor_server
+		SET latesttime = now()
+		WHERE servername = #{servername} AND servercode = #{servercode}
 	</update>
-	
+
+	<update id="updateServerstatus">
+		UPDATE ich_monitor_server
+		SET serverstatus = #{serverstatus}
+		WHERE servername = #{servername} AND servercode = #{servercode}
+	</update>
+
+	<select id="selectByPrimarykeys"  resultType="com.ich.monitor.pojo.IDataMonitor">
+		SELECT * FROM ich_monitor_server WHERE servername = #{servername} AND servercode = #{servercode}
+	</select>
+
+	<select id="selectAll" resultType="com.ich.monitor.pojo.IDataMonitor">
+		select * from ich_monitor_server
+	</select>
+
+	<select id="selectEffectiveByServercode" resultType="com.ich.monitor.pojo.IDataMonitor">
+		SELECT * FROM ich_monitor_server WHERE serverstatus = 1 AND servercode = #{servercode}
+	</select>
+
+	<select id="selectDisEffectiveByServercode" resultType="com.ich.monitor.pojo.IDataMonitor">
+		SELECT * FROM ich_monitor_server WHERE serverstatus = 2 AND servercode = #{servercode}
+	</select>
+
+
+
 </mapper>

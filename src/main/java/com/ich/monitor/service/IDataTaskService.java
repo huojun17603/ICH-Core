@@ -10,5 +10,5 @@ public interface IDataTaskService {
 
     List<IDataTask> obtainTasks(String servercode);
 
-    void completeTask(String taskid, int i);
+    void completeTask(Long taskid, Integer status);
 }

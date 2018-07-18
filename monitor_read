@@ -1,0 +1,40 @@
+1.在resources/task/*.xml中配置
+
+<server>
+    <task servercode="类名_方法名" warnstamp="1000" repeat="true" repeatid="false" ></task>
+</server>
+
+2.在applicationContext-trans.xml最后加上
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+3.在applicationContext-trans.xml最前加上（可选），用于获取代理类以便在同一个类中的方法互调可有事务注入
+<aop:aspectj-autoproxy expose-proxy="true"/>
+<aop:config expose-proxy="true"/>
+
+4.spring-task 加上
+<task:scheduled ref="iDataMonitorServiceImpl" method="execute" cron="0/5 * * * * ?"/>
+
+5.批处理任务（正常）
+在方法开始执行时加上
+iDataMonitorServiceImpl.editLatestTime(类名_方法名)
+
+5.批处理任务（使用任务分配）
+
+function(){（正常事务）
+	获取所有需要发布的逻辑ID列表（继承）
+	抢发布权（无事务）
+	发布与转移任务（新事务）
+	iDataMonitorServiceImpl.publisherTasks();
+	获取我的任务（无事务）
+	iDataMonitorServiceImpl.obtainTasks();
+	for(){
+		（新事务）
+		try{
+			开始此任务（无事务）
+			执行业务（继承）
+			完成此任务（无事务）
+		}ca(){
+			失败此任务（无事务）
+		}
+	}
+}

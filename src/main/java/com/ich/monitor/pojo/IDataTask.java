@@ -10,12 +10,12 @@ public class IDataTask {
     private String serverip;
     //服务编号：类名_方法名
     private String servercode;
-    //执行时间
+    //执行完成时间
     private String handletime;
     //执行ID
     private String handleid;
     //执行状态
-    //0:未执行;1:已执行;2:执行失败
+    //0:未执行;1:正在执行;2:执行成功;3:执行失败
     private Integer handlestatus;
 
     public Long getId() {
