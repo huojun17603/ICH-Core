@@ -1,12 +1,261 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ich.extend.dao.IExamineMapper" >
-
-    <insert id="insert" parameterType="com.ich.extend.pojo.IExamine">
-        INSERT INTO ich_ext_examine(id,handleresult,handletime,handlername,handlermark,sourcegroup,source,sourceid)
-        VALUES(#{id},#{handleresult},#{handletime},#{handlername},#{handlermark},#{sourcegroup},#{source},#{sourceid})
+    <resultMap id="BaseResultMap" type="com.ich.extend.pojo.IExamine" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="handleresult" property="handleresult" jdbcType="INTEGER" />
+        <result column="handletime" property="handletime" jdbcType="TIMESTAMP" />
+        <result column="handlername" property="handlername" jdbcType="VARCHAR" />
+        <result column="handlermark" property="handlermark" jdbcType="VARCHAR" />
+        <result column="sourcegroup" property="sourcegroup" jdbcType="INTEGER" />
+        <result column="source" property="source" jdbcType="INTEGER" />
+        <result column="sourceid" property="sourceid" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    id, handleresult, handletime, handlername, handlermark, sourcegroup, source, sourceid
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ich.extend.pojo.IExamineExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from ich_ext_examine
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from ich_ext_examine
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ich_ext_examine
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.ich.extend.pojo.IExamineExample" >
+        delete from ich_ext_examine
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ich.extend.pojo.IExamine" >
+    insert into ich_ext_examine (id, handleresult, handletime, 
+      handlername, handlermark, sourcegroup, 
+      source, sourceid)
+    values (#{id,jdbcType=VARCHAR}, #{handleresult,jdbcType=INTEGER}, #{handletime,jdbcType=TIMESTAMP}, 
+      #{handlername,jdbcType=VARCHAR}, #{handlermark,jdbcType=VARCHAR}, #{sourcegroup,jdbcType=INTEGER}, 
+      #{source,jdbcType=INTEGER}, #{sourceid,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ich.extend.pojo.IExamine" >
+        insert into ich_ext_examine
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="handleresult != null" >
+                handleresult,
+            </if>
+            <if test="handletime != null" >
+                handletime,
+            </if>
+            <if test="handlername != null" >
+                handlername,
+            </if>
+            <if test="handlermark != null" >
+                handlermark,
+            </if>
+            <if test="sourcegroup != null" >
+                sourcegroup,
+            </if>
+            <if test="source != null" >
+                source,
+            </if>
+            <if test="sourceid != null" >
+                sourceid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="handleresult != null" >
+                #{handleresult,jdbcType=INTEGER},
+            </if>
+            <if test="handletime != null" >
+                #{handletime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="handlername != null" >
+                #{handlername,jdbcType=VARCHAR},
+            </if>
+            <if test="handlermark != null" >
+                #{handlermark,jdbcType=VARCHAR},
+            </if>
+            <if test="sourcegroup != null" >
+                #{sourcegroup,jdbcType=INTEGER},
+            </if>
+            <if test="source != null" >
+                #{source,jdbcType=INTEGER},
+            </if>
+            <if test="sourceid != null" >
+                #{sourceid,jdbcType=VARCHAR},
+            </if>
+        </trim>
     </insert>
-
+    <select id="countByExample" parameterType="com.ich.extend.pojo.IExamineExample" resultType="java.lang.Integer" >
+        select count(*) from ich_ext_examine
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update ich_ext_examine
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.handleresult != null" >
+                handleresult = #{record.handleresult,jdbcType=INTEGER},
+            </if>
+            <if test="record.handletime != null" >
+                handletime = #{record.handletime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.handlername != null" >
+                handlername = #{record.handlername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.handlermark != null" >
+                handlermark = #{record.handlermark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sourcegroup != null" >
+                sourcegroup = #{record.sourcegroup,jdbcType=INTEGER},
+            </if>
+            <if test="record.source != null" >
+                source = #{record.source,jdbcType=INTEGER},
+            </if>
+            <if test="record.sourceid != null" >
+                sourceid = #{record.sourceid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update ich_ext_examine
+        set id = #{record.id,jdbcType=VARCHAR},
+        handleresult = #{record.handleresult,jdbcType=INTEGER},
+        handletime = #{record.handletime,jdbcType=TIMESTAMP},
+        handlername = #{record.handlername,jdbcType=VARCHAR},
+        handlermark = #{record.handlermark,jdbcType=VARCHAR},
+        sourcegroup = #{record.sourcegroup,jdbcType=INTEGER},
+        source = #{record.source,jdbcType=INTEGER},
+        sourceid = #{record.sourceid,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ich.extend.pojo.IExamine" >
+        update ich_ext_examine
+        <set >
+            <if test="handleresult != null" >
+                handleresult = #{handleresult,jdbcType=INTEGER},
+            </if>
+            <if test="handletime != null" >
+                handletime = #{handletime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="handlername != null" >
+                handlername = #{handlername,jdbcType=VARCHAR},
+            </if>
+            <if test="handlermark != null" >
+                handlermark = #{handlermark,jdbcType=VARCHAR},
+            </if>
+            <if test="sourcegroup != null" >
+                sourcegroup = #{sourcegroup,jdbcType=INTEGER},
+            </if>
+            <if test="source != null" >
+                source = #{source,jdbcType=INTEGER},
+            </if>
+            <if test="sourceid != null" >
+                sourceid = #{sourceid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ich.extend.pojo.IExamine" >
+    update ich_ext_examine
+    set handleresult = #{handleresult,jdbcType=INTEGER},
+      handletime = #{handletime,jdbcType=TIMESTAMP},
+      handlername = #{handlername,jdbcType=VARCHAR},
+      handlermark = #{handlermark,jdbcType=VARCHAR},
+      sourcegroup = #{sourcegroup,jdbcType=INTEGER},
+      source = #{source,jdbcType=INTEGER},
+      sourceid = #{sourceid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <!-- ///////////////////////////////////////////////// -->
     <select id="selectMaxGroup" resultType="com.ich.extend.pojo.IExamine">
         SELECT max(sourcegroup) FROM ich_ext_examine
         WHERE source=#{source} AND sourceid=#{sourceid}

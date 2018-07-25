@@ -39,7 +39,7 @@ public class IFeedbackServiceImpl implements IFeedbackService {
 
     @Override
     public HttpResponse deleteFeedback(String id) {
-        int result = feedbackMapper.delete(id);
+        int result = feedbackMapper.deleteByPrimaryKey(id);
         return result==1?new HttpResponse(HttpResponse.HTTP_OK,HttpResponse.HTTP_MSG_OK):new HttpResponse(HttpResponse.HTTP_ERROR,HttpResponse.HTTP_MSG_ERROR);
     }
 

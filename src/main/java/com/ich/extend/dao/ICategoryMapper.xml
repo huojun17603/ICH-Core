@@ -1,31 +1,276 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ich.extend.dao.ICategoryMapper" >
-
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ich.extend.pojo.ICategory">
-        INSERT INTO ich_ext_category(pid,source,status,onum,name,remark,attr,http)
-        VALUES(#{pid},#{source},#{status},#{onum},#{name},#{remark},#{attr},#{http})
+    <resultMap id="BaseResultMap" type="com.ich.extend.pojo.ICategory" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="source" property="source" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="onum" property="onum" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="BIT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="attr" property="attr" jdbcType="VARCHAR" />
+        <result column="http" property="http" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    id, pid, source, name, onum, status, remark, attr, http
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ich.extend.pojo.ICategoryExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from ich_ext_category
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from ich_ext_category
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ich_ext_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.ich.extend.pojo.ICategoryExample" >
+        delete from ich_ext_category
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ich.extend.pojo.ICategory" >
+    insert into ich_ext_category (pid, source,
+      name, onum, status, remark, 
+      attr, http)
+    values (#{pid,jdbcType=INTEGER}, #{source,jdbcType=INTEGER},
+      #{name,jdbcType=VARCHAR}, #{onum,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
+      #{attr,jdbcType=VARCHAR}, #{http,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.ich.extend.pojo.ICategory" >
+        insert into ich_ext_category
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="pid != null" >
+                pid,
+            </if>
+            <if test="source != null" >
+                source,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="onum != null" >
+                onum,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="attr != null" >
+                attr,
+            </if>
+            <if test="http != null" >
+                http,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="pid != null" >
+                #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="source != null" >
+                #{source,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="onum != null" >
+                #{onum,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="attr != null" >
+                #{attr,jdbcType=VARCHAR},
+            </if>
+            <if test="http != null" >
+                #{http,jdbcType=VARCHAR},
+            </if>
+        </trim>
     </insert>
-
-    <update id="update" parameterType="com.ich.extend.pojo.ICategory">
-        UPDATE ich_ext_category
-        SET pid=#{pid},source=#{source},status=#{status},onum=#{onum},name=#{name},remark=#{remark},attr=#{attr},http=#{http}
-        WHERE id = #{id}
+    <select id="countByExample" parameterType="com.ich.extend.pojo.ICategoryExample" resultType="java.lang.Integer" >
+        select count(*) from ich_ext_category
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update ich_ext_category
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.pid != null" >
+                pid = #{record.pid,jdbcType=INTEGER},
+            </if>
+            <if test="record.source != null" >
+                source = #{record.source,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null" >
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.onum != null" >
+                onum = #{record.onum,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null" >
+                status = #{record.status,jdbcType=BIT},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.attr != null" >
+                attr = #{record.attr,jdbcType=VARCHAR},
+            </if>
+            <if test="record.http != null" >
+                http = #{record.http,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
     </update>
+    <update id="updateByExample" parameterType="map" >
+        update ich_ext_category
+        set id = #{record.id,jdbcType=INTEGER},
+        pid = #{record.pid,jdbcType=INTEGER},
+        source = #{record.source,jdbcType=INTEGER},
+        name = #{record.name,jdbcType=VARCHAR},
+        onum = #{record.onum,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=BIT},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        attr = #{record.attr,jdbcType=VARCHAR},
+        http = #{record.http,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ich.extend.pojo.ICategory" >
+        update ich_ext_category
+        <set >
+            <if test="pid != null" >
+                pid = #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="source != null" >
+                source = #{source,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="onum != null" >
+                onum = #{onum,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="attr != null" >
+                attr = #{attr,jdbcType=VARCHAR},
+            </if>
+            <if test="http != null" >
+                http = #{http,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ich.extend.pojo.ICategory" >
+    update ich_ext_category
+    set pid = #{pid,jdbcType=INTEGER},
+      source = #{source,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      onum = #{onum,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR},
+      attr = #{attr,jdbcType=VARCHAR},
+      http = #{http,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
+    <!-- /////////////////////////////////////////// -->
     <update id="updateStatus">
         UPDATE ich_ext_category
         SET status=#{status}
         WHERE id = #{id}
     </update>
-
-    <delete id="delete">
-        DELETE FROM ich_ext_category WHERE id = #{id}
-    </delete>
-
-    <select id="selectById" resultType="com.ich.extend.pojo.ICategory">
-        SELECT * FROM ich_ext_category WHERE id = #{id}
-    </select>
 
     <select id="selectListOfSource"  resultType="com.ich.extend.pojo.ICategory">
         SELECT * FROM ich_ext_category

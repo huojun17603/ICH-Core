@@ -33,7 +33,7 @@ public class ICategoryServiceImpl implements ICategoryService{
             category.setStatus(false);//初始化为无效
             result = categoryMapper.insert(category);
         }else{
-            result = categoryMapper.update(category);
+            result = categoryMapper.updateByPrimaryKeySelective(category);
         }
         return result==1?new HttpResponse(HttpResponse.HTTP_OK,HttpResponse.HTTP_MSG_OK):new HttpResponse(HttpResponse.HTTP_ERROR,HttpResponse.HTTP_MSG_ERROR);
     }
@@ -46,11 +46,11 @@ public class ICategoryServiceImpl implements ICategoryService{
 
     @Override
     public HttpResponse deleteCategory(Long id) {
-        ICategory category = categoryMapper.selectById(id);
+        ICategory category = categoryMapper.selectByPrimaryKey(id);
         if(ObjectHelper.isEmpty(category)) return new HttpResponse(HttpResponse.HTTP_ERROR,HttpResponse.HTTP_MSG_ERROR);
         List<ICategory> list = findListOfPid(category.getId(),category.getSource(),null);
         if(ObjectHelper.isNotEmpty(list)) return new HttpResponse(HttpResponse.HTTP_ERROR,"请先删除其子级类目");
-        int result = categoryMapper.delete(id);
+        int result = categoryMapper.deleteByPrimaryKey(id);
         return result==1?new HttpResponse(HttpResponse.HTTP_OK,HttpResponse.HTTP_MSG_OK):new HttpResponse(HttpResponse.HTTP_ERROR,HttpResponse.HTTP_MSG_ERROR);
     }
 

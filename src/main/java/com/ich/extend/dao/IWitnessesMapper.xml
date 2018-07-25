@@ -1,11 +1,279 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ich.extend.dao.IWitnessesMapper" >
-
-    <insert id="insert" parameterType="com.ich.extend.pojo.IWitnesses">
-        INSERT INTO ich_ext_witnesses(id,aid,aname,wid,wname,reason,createtime,handletime,status)
-        VALUES(#{id},#{aid},#{aname},#{wid},#{wname},#{reason},#{createtime},#{handletime},#{status})
+    <resultMap id="BaseResultMap" type="com.ich.extend.pojo.IWitnesses" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="aid" property="aid" jdbcType="VARCHAR" />
+        <result column="aname" property="aname" jdbcType="VARCHAR" />
+        <result column="wid" property="wid" jdbcType="VARCHAR" />
+        <result column="wname" property="wname" jdbcType="VARCHAR" />
+        <result column="reason" property="reason" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="handletime" property="handletime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    id, aid, aname, wid, wname, reason, createtime, handletime, status
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ich.extend.pojo.IWitnessesExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from ich_ext_witnesses
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from ich_ext_witnesses
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ich_ext_witnesses
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.ich.extend.pojo.IWitnessesExample" >
+        delete from ich_ext_witnesses
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ich.extend.pojo.IWitnesses" >
+    insert into ich_ext_witnesses (id, aid, aname, 
+      wid, wname, reason, 
+      createtime, handletime, status
+      )
+    values (#{id,jdbcType=VARCHAR}, #{aid,jdbcType=VARCHAR}, #{aname,jdbcType=VARCHAR}, 
+      #{wid,jdbcType=VARCHAR}, #{wname,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{handletime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.ich.extend.pojo.IWitnesses" >
+        insert into ich_ext_witnesses
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="aid != null" >
+                aid,
+            </if>
+            <if test="aname != null" >
+                aname,
+            </if>
+            <if test="wid != null" >
+                wid,
+            </if>
+            <if test="wname != null" >
+                wname,
+            </if>
+            <if test="reason != null" >
+                reason,
+            </if>
+            <if test="createtime != null" >
+                createtime,
+            </if>
+            <if test="handletime != null" >
+                handletime,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="aid != null" >
+                #{aid,jdbcType=VARCHAR},
+            </if>
+            <if test="aname != null" >
+                #{aname,jdbcType=VARCHAR},
+            </if>
+            <if test="wid != null" >
+                #{wid,jdbcType=VARCHAR},
+            </if>
+            <if test="wname != null" >
+                #{wname,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null" >
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null" >
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="handletime != null" >
+                #{handletime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
     </insert>
+    <select id="countByExample" parameterType="com.ich.extend.pojo.IWitnessesExample" resultType="java.lang.Integer" >
+        select count(*) from ich_ext_witnesses
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update ich_ext_witnesses
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.aid != null" >
+                aid = #{record.aid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.aname != null" >
+                aname = #{record.aname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wid != null" >
+                wid = #{record.wid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wname != null" >
+                wname = #{record.wname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reason != null" >
+                reason = #{record.reason,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createtime != null" >
+                createtime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.handletime != null" >
+                handletime = #{record.handletime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null" >
+                status = #{record.status,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update ich_ext_witnesses
+        set id = #{record.id,jdbcType=VARCHAR},
+        aid = #{record.aid,jdbcType=VARCHAR},
+        aname = #{record.aname,jdbcType=VARCHAR},
+        wid = #{record.wid,jdbcType=VARCHAR},
+        wname = #{record.wname,jdbcType=VARCHAR},
+        reason = #{record.reason,jdbcType=VARCHAR},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+        handletime = #{record.handletime,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ich.extend.pojo.IWitnesses" >
+        update ich_ext_witnesses
+        <set >
+            <if test="aid != null" >
+                aid = #{aid,jdbcType=VARCHAR},
+            </if>
+            <if test="aname != null" >
+                aname = #{aname,jdbcType=VARCHAR},
+            </if>
+            <if test="wid != null" >
+                wid = #{wid,jdbcType=VARCHAR},
+            </if>
+            <if test="wname != null" >
+                wname = #{wname,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null" >
+                reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null" >
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="handletime != null" >
+                handletime = #{handletime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ich.extend.pojo.IWitnesses" >
+    update ich_ext_witnesses
+    set aid = #{aid,jdbcType=VARCHAR},
+      aname = #{aname,jdbcType=VARCHAR},
+      wid = #{wid,jdbcType=VARCHAR},
+      wname = #{wname,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      handletime = #{handletime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    
+    <!-- ////////////////////////////////////////// -->
 
     <update id="updateWitnessesOfHandle" >
         UPDATE ich_ext_witnesses
